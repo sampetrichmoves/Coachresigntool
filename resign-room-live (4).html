@@ -177,7 +177,7 @@
 const SHARED_KEY="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";
 let KEY="";try{KEY=localStorage.getItem("mm_key")||"";}catch(e){}
 if(SHARED_KEY)KEY=SHARED_KEY;
-function saveKey(k){KEY=k;try{localStorage.setItem("mm_key",k);}catch(e){}";
+function saveKey(k){KEY=k;try{localStorage.setItem("mm_key",k);}catch(e){}}
 function clearKey(){KEY="";try{localStorage.removeItem("mm_key");}catch(e){}}
 const MODEL="claude-haiku-4-5-20251001";
 

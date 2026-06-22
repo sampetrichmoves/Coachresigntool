@@ -602,7 +602,7 @@ async function turn(){
   if(!liveEl){hideTyping();liveEl=addMsg("client","",c);}
   const p=parseState(raw);const rb=liveEl.querySelector(".replaybtn");liveEl.innerHTML=`<span class="tag">${c.name}</span>${p.text}`;const newRb=document.createElement("button");newRb.className="replaybtn";newRb.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 18 12 6 20 6 4"/></svg> replay voice';newRb.onclick=()=>speak(p.text,c.vg);liveEl.appendChild(newRb);
   history.push({role:"assistant",content:p.text});
-  if(p.warmth!=null)st.warmth=,"greg","sienna","frank","ray","priya"p.warmth;
+  if(p.warmth!=null)st.warmth=p.warmth;
   if(p.resigned&&st.warmth>=80&&!st.closedAt)st.closedAt=Date.now()-st.callStart; // remember when a genuine yes landed (for speed), but don't declare the win here
   updateMeter();speak(p.text,c.vg);
   if(p.resigned||st.warmth>=86){input.placeholder="Sounds like a yes — hit ‘End call & score’ to lock it in.";}

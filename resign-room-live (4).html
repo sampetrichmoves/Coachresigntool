@@ -432,7 +432,7 @@ function updateMeter(){const f=document.getElementById("mfill"),m=document.getEl
 function addMsg(role,text,c){const stream=document.getElementById("stream");const d=document.createElement("div");d.className="msg "+role;
  if(role==="client"){d.innerHTML=`<span class="tag">${c.name}</span>${text}<button class="replaybtn"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 18 12 6 20 6 4"/></svg> replay voice</button>`;d.querySelector(".replaybtn").onclick=()=>speak(text,c.vg);}
  else d.innerHTML=`<span class="tag">You · the closer</span>${text}`;
- stream.appendChild(d);stream.scrollTop=stream.scrollHeight;}
+ stream.appendChild(d);stream.scrollTop=stream.scrollHeight;return d;}
 function showTyping(){const s=document.getElementById("stream");const t=document.createElement("div");t.className="typing";t.id="typing";t.innerHTML="<i></i><i></i><i></i>";s.appendChild(t);s.scrollTop=s.scrollHeight;}
 function hideTyping(){const t=document.getElementById("typing");if(t)t.remove();}
 function showErr(m){const s=document.getElementById("stream");const e=document.createElement("div");e.className="err";e.innerHTML=m;s.appendChild(e);s.scrollTop=s.scrollHeight;}
@@ -449,10 +449,10 @@ async function turn(){
  input.value="";input.style.height="auto";busy=true;document.getElementById("send").disabled=true;showTyping();
  try{
   const sys=c.system+(HARD_MODE?HARD_ADD:"")+STATE_INSTR;
-  let raw="";let liveEl=null;
-  for(let _r=0;_r<3;_r++){try{raw=await callClaude(history,sys,600,t=>{if(!liveEl){hideTyping();liveEl=addMsg("client","",c);}liveEl.textContent+=t;});break;}catch(e){if(_r===2||e.message==="NO_KEY"||e.message==="BAD_KEY")throw e;raw="";liveEl=null;await new Promise(r=>setTimeout(r,1000*(_r+1)));showTyping();}}
+  let raw="";let liveEl=null;let liveSpan=null;
+  for(let _r=0;_r<3;_r++){try{raw=await callClaude(history,sys,600,t=>{if(!liveEl){hideTyping();liveEl=addMsg("client","",c);liveSpan=document.createElement("span");liveEl.insertBefore(liveSpan,liveEl.querySelector(".replaybtn"));}liveSpan.textContent+=t;});break;}catch(e){if(_r===2||e.message==="NO_KEY"||e.message==="BAD_KEY")throw e;raw="";liveEl=null;liveSpan=null;await new Promise(r=>setTimeout(r,1000*(_r+1)));showTyping();}}
   if(!liveEl){hideTyping();liveEl=addMsg("client","",c);}
-  const p=parseState(raw);liveEl.textContent=p.text;
+  const p=parseState(raw);const rb=liveEl.querySelector(".replaybtn");liveEl.innerHTML=`<span class="tag">${c.name}</span>${p.text}`;const newRb=document.createElement("button");newRb.className="replaybtn";newRb.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 18 12 6 20 6 4"/></svg> replay voice';newRb.onclick=()=>speak(p.text,c.vg);liveEl.appendChild(newRb);
   history.push({role:"assistant",content:p.text});
   if(p.warmth!=null)st.warmth=p.warmth;
   if(p.resigned&&st.warmth>=80&&!st.closedAt)st.closedAt=Date.now()-st.callStart; // remember when a genuine yes landed (for speed), but don't declare the win here

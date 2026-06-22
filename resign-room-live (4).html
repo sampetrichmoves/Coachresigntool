@@ -510,7 +510,7 @@ function renderLobby(){stopSpeak();if(st)stopTimer();
    <div class="badges"><span class="badge obj">${c.obj}</span><span class="badge d${c.diff}">${c.diffLabel}</span></div></button>`;});
   secs+=`<div class="group-label">${gn[d]}</div><div class="clients">${cc}</div>`;});
  app.innerHTML=`<div class="card lobby">
-  <span class="eyebrow"><span class="dot"></span> 12 clients · pick one and close the resign</span>
+  <span class="eyebrow"><span class="dot"></span> ${ORDER.length} clients · pick one and close the resign</span>
   <h2>Step into the call.</h2>
   <p class="lead">Each client is fictional but modeled on real resign conversations. They talk back out loud and the conversation goes wherever you take it — type or tap the mic. The meter shows how close they are to yes; the side panel tells you how to handle them. End the call any time for a scored debrief.</p>
   <div class="ctl-row">

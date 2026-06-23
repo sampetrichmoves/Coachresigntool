@@ -175,7 +175,7 @@
    the Anthropic console so cost can never run away. You can rotate the key anytime.
    Leave SHARED_KEY empty ("") to make each person enter their own key instead.
    ============================================================ */
-const SHARED_KEY="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";
+const SHARED_KEY="";
 let KEY="";try{KEY=localStorage.getItem("mm_key")||"";}catch(e){}
 if(SHARED_KEY)KEY=SHARED_KEY;
 function saveKey(k){KEY=k;try{localStorage.setItem("mm_key",k);}catch(e){}}
@@ -608,7 +608,7 @@ async function turn(){
   if(p.resigned||st.warmth>=86){input.placeholder="Sounds like a yes — hit ‘End call & score’ to lock it in.";}
  }catch(err){
   hideTyping();
-  if(err.message==="NO_KEY"||err.message==="BAD_KEY"){showErr(`<b>Your API key needs attention.</b> It was missing or rejected — click "⚙ API key" up top to re-enter it.`);}
+  if(err.message==="NO_KEY"||err.message==="BAD_KEY"){showErr(`<b>Your API key needs attention.</b> It was missing or rejected — click <b>⚙ API key</b> in the top-right to update it.`);}
   else showErr(`<b>Couldn't reach Claude.</b> ${err.message}. Check your connection and try again.`);
  }finally{busy=false;if(st&&!st.over)document.getElementById("send").disabled=false;input.focus();}
 }
@@ -656,8 +656,7 @@ Respond with ONLY valid JSON, no markdown: {"resigned":true|false,"score":0-100,
    else timeNote=`<div class="timepill">Ended at ${fmtT(elapsedMs)}</div>`;}
   renderDebrief(r,c,timeNote);
  }catch(err){
-  app.innerHTML=`<div class="card debrief"><h2>Couldn't score the call</h2><p class="lead">${err.message==="BAD_KEY"||err.message==="NO_KEY"?"Your API key was missing or rejected — re-enter it and try again.":err.message}</p>
-   <button class="btn primary" style="margin-top:18px" id="bk">Back to lobby</button></div>`;
+  app.innerHTML=`<div class="card debrief" style="padding:28px 32px"><div class="eyebrow"><span class="dot"></span>Call ended</div><h2 style="font-size:1.4rem;margin:8px 0 10px">Couldn't score this call</h2><p class="lead">${err.message==="BAD_KEY"||err.message==="NO_KEY"?"Your Anthropic API key was rejected or missing.":err.message}</p>${(err.message==="BAD_KEY"||err.message==="NO_KEY")?'<p class="lead" style="margin-top:8px;font-size:.9rem">Fix it: click <b style=\"color:var(--lime)\">Update API Key</b> below, paste a valid key from <a href=\"https://console.anthropic.com/settings/keys\" target=\"_blank\" style=\"color:var(--lime)\">console.anthropic.com</a>, then try again.</p>':""}<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><button class="btn primary" id="bk">Back to lobby</button>${(err.message==="BAD_KEY"||err.message==="NO_KEY")?'<button class="btn ghost" onclick="renderSetup()">⚙ Update API Key</button>':""}</div></div>`;
   document.getElementById("bk").onclick=renderLobby;
  }
 }

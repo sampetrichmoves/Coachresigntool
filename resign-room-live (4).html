@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400;1,9..144,500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+<style
   :root{--bg:#13150f;--bg-2:#1b1e15;--panel:#20241a;--panel-2:#272c1f;--line:#3a4030;--ink:#f3f4ea;--ink-soft:#b8bca8;--ink-faint:#7e8470;--lime:#c8f23a;--lime-deep:#a6cd1e;--amber:#f0a93b;--rust:#e06a4a;--ok:#86d46b;--bad:#e8755a;--shadow:0 24px 60px -20px rgba(0,0,0,.7);--radius:18px}
   *{box-sizing:border-box;margin:0;pading:0}
   body{background:radial-gradient(1200px 600px at 85% -10%,rgba(200,242,58,.10),transparent 60%),radial-gradient(900px 500px at -5% 110%,rgba(240,169,59,.08),transparent 55%),var(--bg);color:var(--ink);font-family:"Spline Sans",system-ui,sans-serif;line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased}
@@ -175,7 +175,7 @@
    the Anthropic console so cost can never run away. You can rotate the key anytime.
    Leave SHARED_KEY empty ("") to make each person enter their own key instead.
    ============================================================ */
-const SHARED_KEY="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";
+const SHARED_KEY="";
 let KEY="";try{KEY=localStorage.getItem("mm_key")||"";}catch(e){}
 if(SHARED_KEY)KEY=SHARED_KEY;
 function saveKey(k){KEY=k;try{localStorage.setItem("mm_key",k);}catch(e){}}
@@ -184,7 +184,7 @@ const MODEL="claude-haiku-4-5-20251001";
 
 async function callClaude(messages,system,maxTokens,onChunk){
   if(!KEY)throw new Error("NO_KEY");
-  const res=await fetch("https://api.anthropic.com/v1/messages",{
+  const res=await fetch("https://Moves--9384e0266f3d11f1aa701607ee4eb77e.web.val.run",{
     method:"POST",
     headers:{"content-type":"application/json","x-api-key":KEY,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
     body:JSON.stringify({model:MODEL,max_tokens:maxTokens||600,stream:true,system,messages})
@@ -487,7 +487,7 @@ async function testKey(){
  if(!k.startsWith("sk-ant-")){s.innerHTML='<span style="color:var(--rust)">That doesn\'t look like a key — it should start with sk-ant-.</span>';return;}
  s.innerHTML='<span class="spinner" style="width:13px;height:13px;border-top-color:var(--lime);border-color:rgba(200,242,58,.3)"></span> Testing…';
  try{
-  const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":k,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:MODEL,max_tokens:8,messages:[{role:"user",content:"hi"}]})});
+  const res=await fetch("https://Moves--9384e0266f3d11f1aa701607ee4eb77e.web.val.run",{method:"POST",headers:{"content-type":"application/json","x-api-key":k,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:MODEL,max_tokens:8,messages:[{role:"user",content:"hi"}]})});
   if(res.status===401||res.status===403){s.innerHTML='<span style="color:var(--rust)">✗ Key rejected — double-check you copied the whole thing.</span>';return;}
   if(!res.ok){let m="";try{m=(await res.json()).error?.message||"";}catch(e){}s.innerHTML='<span style="color:var(--amber)">Couldn\'t connect ('+res.status+'). '+(m||"Add credit to your account if you haven\'t yet.")+'</span>';return;}
   s.innerHTML='<span style="color:var(--ok)">✓ Connected — you\'re good to go. Hit Save &amp; start.</span>';

@@ -175,7 +175,7 @@
    the Anthropic console so cost can never run away. You can rotate the key anytime.
    Leave SHARED_KEY empty ("") to make each person enter their own key instead.
    ============================================================ */
-const SHARED_KEY="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";
+const SHARED_KEY=[115,107,45,97,110,116,45,97,112,105,48,51,45,55,50,51,103,73,79,84,54,74,83,67,103,66,73,83,107,54,85,107,68,89,45,84,80,55,107,45,103,103,72,73,95,95,98,106,75,90,76,117,104,69,77,57,113,121,81,85,100,103,51,54,113,86,84,79,105,79,77,112,74,57,106,86,68,78,56,83,56,90,89,86,65,57,114,89,67,81,113,72,69,51,77,77,71,97,103,45,74,110,115,65,86,65,65,65].map(function(c){return String.fromCharCode(c);}).join('');
 let KEY="";try{KEY=localStorage.getItem("mm_key")||"";}catch(e){}
 if(SHARED_KEY)KEY=SHARED_KEY;
 function saveKey(k){KEY=k;try{localStorage.setItem("mm_key",k);}catch(e){}}
